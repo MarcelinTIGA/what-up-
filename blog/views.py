@@ -1,14 +1,18 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post, Comment
+from .models import Post, Comment, Category
 from .forms import CommentForm
 
 
 # Create your views here.
 
-def post_list(request):
-    object_list = Post.objects.all()
-    paginator = Paginator(object_list, 2)
+def post_list(request, category=None):
+    posts = Post.objects.all()
+    if category:
+        category = get_object_or_404(Category, slug=category)
+        posts = posts.filter(category=category)
+    categories = Category.objects.all()
+    paginator = Paginator(posts, 2)
     page = request.GET.get('page')
 
     try:
@@ -21,6 +25,8 @@ def post_list(request):
     context = {
         'posts': posts,
         'page': page,
+        'categories': categories,
+        'category': category
     }
 
     return render(request, 'blog/post/list.html', context)

@@ -8,6 +8,9 @@
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">What Up today!</h1>
                     <p class="lead mb-0">Welcome to our blog where we share thoughts and ideas!</p>
+                    {% if category %}
+                        <p class="lead mb-0">Category: {{ category }}</p>
+                    {% endif %}
                 </div>
             </div>
         </header>
@@ -65,20 +68,13 @@
                         <div class="card-header">Categories</div>
                         <div class="card-body">
                             <div class="row">
+                                {% for cat in categories %}
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
+                                        <li><a href="{% url 'category_posts_list' cat.slug %}">{{ cat.name }}</a></li>
                                     </ul>
                                 </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
-                                    </ul>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

@@ -1,11 +1,14 @@
 from django.contrib import admin
-from .models import Post, Comment
+from .models import Post, Comment, Category
 
 # Register your models here.
 
 #admin.site.register(Post)
 
 #personnalisation de l'interface d'administration
+admin.site.register(Category)
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'status', 'slug', 'author', 'pusblish', 'created_at')
